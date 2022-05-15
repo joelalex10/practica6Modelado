@@ -1,0 +1,224 @@
+
+<div class="title">
+  <mat-card-title>AGENCIA AZUCAR</mat-card-title>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col-3">
+    <div class="container">
+      <div class="row">
+        <mat-card>
+          <mat-card-title>Ingresar Parametros</mat-card-title>
+          <span *ngIf="valid; else space" [ngStyle]="{color:hintColor }">*Todos los campos son obligatorios</span>
+          <ng-template #space>
+            <br>
+          </ng-template>
+          <form [formGroup]="generateData" (ngSubmit)="generarNumeros()">
+            <div class="row">
+              <mat-form-field appearance="outline" fxFlex="100" >
+                <mat-label>Horas de Trabajo</mat-label>
+                <input matInput
+                       placeholder="Ingrese el total de horas de trabajo"
+                       type="number"
+                       formControlName="HTra"
+                       required>
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Numero de Dias</mat-label>
+                <input matInput
+                       type="number"
+                       placeholder="Ingrese el numero de Dias"
+                       formControlName="NMaxD"
+                       required>
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Indice de Produccion de la maquina</mat-label>
+                <input matInput
+                       type="number"
+                       placeholder="Ingrese el indice de Produccion de la maquina"
+                       formControlName="iProMa"
+                       required>
+
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Probabilidad de la maquina se descomponga</mat-label>
+                <input matInput
+                       type="number"
+                       placeholder="Ingrese la probabilidad de que la maquina se descomponga"
+                       formControlName="pMaqDesc"
+                       required>
+
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Precio de Venta de producto</mat-label>
+                <input matInput
+                       type="number"
+                       placeholder="Ingrese el precio de venta del producto"
+                       formControlName="PVenProd"
+                       required>
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Costo de Produccion de maquina Normal</mat-label>
+                <input matInput
+                       type="number"
+                       placeholder="Ingrese el costo de produccion de maquina normal"
+                       formControlName="CProMaqNor"
+                       required>
+
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Costo de Produccion de maquina Emergencia</mat-label>
+                <input matInput
+                       type="number"
+                       placeholder="Ingrese el numero de simulaciones"
+                       formControlName="CProMaqEme"
+                       required>
+              </mat-form-field>
+            </div>
+
+            <div class="row">
+              <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Costo de Reparacion</mat-label>
+                <input matInput
+                       type="number"
+                       placeholder="Ingrese el costo de Reparacion"
+                       formControlName="CRep"
+                       required>
+              </mat-form-field>
+            </div>
+
+
+            <div class="row">
+              <mat-form-field appearance="outline" fxFlex="100">
+                <mat-label>Costo Fijo</mat-label>
+                <input matInput
+                       type="number"
+                       placeholder="Ingrese el costo fijo"
+                       formControlName="Cfijo"
+                       required>
+              </mat-form-field>
+            </div>
+
+            <div class="row ">
+              <div class="col mt-3 mx-auto d-flex justify-content-center">
+                <button  mat-raised-button color="primary" type="submit">
+                  <mat-icon>arrow_forward</mat-icon>
+                  GENERAR SIMULACIONES
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="col-9">
+
+    <div class="container">
+      <mat-card>
+        <mat-card-title>Lista de Simulaciones</mat-card-title>
+        <mat-table #table [dataSource]="dataSource">
+          <ng-container matColumnDef="cNMaxD" >
+            <mat-header-cell *matHeaderCellDef> Dia </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.cNMaxD}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="rEstMaq">
+            <mat-header-cell *matHeaderCellDef> r. Estado Maquina </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.rEstMaq}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="rTFallMaq">
+            <mat-header-cell *matHeaderCellDef> r. Tipo Falla</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.rTFallMaq}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="rTiempRep">
+            <mat-header-cell *matHeaderCellDef> r. Tiempo Recuperacion</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.rTiempRep}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="TiempRep">
+            <mat-header-cell *matHeaderCellDef> Tiempo Recuperacion</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.TiempRep}} </mat-cell>
+          </ng-container>
+
+
+          <ng-container matColumnDef="GVenDia">
+            <mat-header-cell *matHeaderCellDef> Ganancia Venta </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.GVenDia}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="CproDia">
+            <mat-header-cell *matHeaderCellDef> Costo Produccion Dia </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.CproDia}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="BNetDia">
+            <mat-header-cell *matHeaderCellDef> Beneficio Neto Dia </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.BNetDia}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="BNetT">
+            <mat-header-cell *matHeaderCellDef> Beneficio Neto Total </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.BNetT}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="CTRepD">
+            <mat-header-cell *matHeaderCellDef> Costo de Reposicion por Dia </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.CTRepD}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="CAd">
+            <mat-header-cell *matHeaderCellDef> Costo Adicional </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.CAd}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="ProdMaqNorT">
+            <mat-header-cell *matHeaderCellDef> Produccion Maquina Normal Total </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.ProdMaqNorT}} </mat-cell>
+          </ng-container>
+
+
+          <ng-container matColumnDef="ProdMaqEmerT">
+            <mat-header-cell *matHeaderCellDef> Produccion Maquina Emergencia Total </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.ProdMaqEmerT}} </mat-cell>
+          </ng-container>
+
+
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[6, 12, 24, 48]"></mat-paginator>
+      </mat-card>
+      <br>
+      <mat-card>
+        <mat-card-title>Resultados</mat-card-title>
+        <br>
+        <mat-card-subtitle>Beneficio Neto Promedio Dia: {{ varEndogenaMaquinas.BNetPromDia }}</mat-card-subtitle>
+        <mat-card-subtitle>Costo Adicional Total: {{ varEndogenaMaquinas.CostAdT }} </mat-card-subtitle>
+        <mat-card-subtitle>Produccion Promedio Maquina Normal: {{ varEndogenaMaquinas.PPromMaqNor }} </mat-card-subtitle>
+        <mat-card-subtitle>Produccion Promedio Maquina Emergencia: {{ varEndogenaMaquinas.PPromMaqEmer }} </mat-card-subtitle>
+      </mat-card>
+    </div>
+  </div>
+</div>
